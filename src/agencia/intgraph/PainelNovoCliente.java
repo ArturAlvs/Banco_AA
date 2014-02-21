@@ -386,8 +386,7 @@ public class PainelNovoCliente extends JPanel {
 				e.printStackTrace();
 			}
 
-			int key = Teste.getBancoGNB().getAgencias()
-					.get(Teste.getAgenciaIntMap()).getContas().size() + 1;
+			Integer key = new Integer( textNumeroConta.getText() );
 
 			Teste.getBancoGNB().getAgencias().get(Teste.getAgenciaIntMap())
 					.getContas().put(key, contaCartao);
@@ -447,8 +446,7 @@ public class PainelNovoCliente extends JPanel {
 				e.printStackTrace();
 			}
 
-			int key = Teste.getBancoGNB().getAgencias()
-					.get(Teste.getAgenciaIntMap()).getContas().size() + 1;
+			Integer key = new Integer( textNumeroConta.getText() );
 
 			Teste.getBancoGNB().getAgencias().get(Teste.getAgenciaIntMap())
 					.getContas().put(key, contaPoupanca);
@@ -509,8 +507,7 @@ public class PainelNovoCliente extends JPanel {
 				e.printStackTrace();
 			}
 
-			int key = Teste.getBancoGNB().getAgencias()
-					.get(Teste.getAgenciaIntMap()).getContas().size() + 1;
+			Integer key = new Integer( textNumeroConta.getText() );
 
 			Teste.getBancoGNB().getAgencias().get(Teste.getAgenciaIntMap())
 					.getContas().put(key, contaCorrente);

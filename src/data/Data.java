@@ -4,19 +4,12 @@ import java.io.Serializable;
 
 
 public class Data implements Serializable{
-<<<<<<< HEAD
 
 	private int dia;
 	private int mes;
 	private int ano;
+	
 
-=======
-	
-	private int dia;
-	private int mes;
-	private int ano;
-	
->>>>>>> f24f22b7eca989f2c631334efd2066a42771f854
 	public Data(int dia, int mes, int ano) throws DataInvalida {
 		this.setAno(ano);
 		this.setMes(mes);
@@ -28,11 +21,7 @@ public class Data implements Serializable{
 		String dia = "";
 		String mes = "";
 		String data = "";
-<<<<<<< HEAD
 
-=======
-		
->>>>>>> f24f22b7eca989f2c631334efd2066a42771f854
 		if (this.getDia() < 10) {
 			dia = "0" + this.getDia();
 		}
@@ -54,11 +43,7 @@ public class Data implements Serializable{
 
 	public void setDia(int dia) throws DataInvalida{
 		//se mes diferente de fevereiro
-<<<<<<< HEAD
 
-=======
-		
->>>>>>> f24f22b7eca989f2c631334efd2066a42771f854
 		int[] meses = new int[12];
 		meses[0]=31;
 		for (int j = 1; j < meses.length; j++) {
@@ -81,11 +66,7 @@ public class Data implements Serializable{
 		//caso seja fevereiro
 		else{
 			boolean bol = false;
-<<<<<<< HEAD
 
-=======
-			
->>>>>>> f24f22b7eca989f2c631334efd2066a42771f854
 			//anos multiplos de 4 q nao sao multiplos de 100 sao bissestos
 			if(this.getAno() % 4 == 0 && this.getAno() % 100 != 0){
 				bol = true;
@@ -94,30 +75,29 @@ public class Data implements Serializable{
 			if(this.getAno() >= 2000 && this.getAno() % 400 == 0){
 				bol = true;
 			}
-<<<<<<< HEAD
+
 
 			//se for ano bissesto fevereiro pode ser setado com dia <= 29
 
-=======
+
 			
 			//se for ano bissesto fevereiro pode ser setado com dia <= 29
-			
->>>>>>> f24f22b7eca989f2c631334efd2066a42771f854
+
 				if(dia <= 28)
 					this.dia=dia;
 				if(dia ==29 && bol)
 					this.dia=dia;
 				//meses.get(1).setQuantDia(meses.get(1).getQuantDia() + 1);
-<<<<<<< HEAD
+
 
 		}
 
-=======
+
 			
 		}
 	
->>>>>>> f24f22b7eca989f2c631334efd2066a42771f854
-	}
+
+	
 
 	public int getMes() {
 		return mes;
