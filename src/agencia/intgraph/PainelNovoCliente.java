@@ -15,11 +15,14 @@ import javax.swing.plaf.basic.BasicBorders.RadioButtonBorder;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.MaskFormatter;
 
+import menu.testaMenu;
 import cliente.Cliente;
 import cliente.Endereco;
 import cliente.PessoaFisica;
 import cliente.PessoaJuridica;
+import conta.ContaCartaoCredito;
 import conta.ContaCorrente;
+import conta.ContaPoupanca;
 import data.Data;
 import data.DataInvalida;
 import enums.TipoContas;
@@ -142,6 +145,8 @@ public class PainelNovoCliente extends JPanel {
 				textTaxaServico.setEnabled(true);
 				textLimiteSaque.setEnabled(true);
 				labelTaxa.setText("Taxa de Juros:");
+				
+				textNumeroConta.setText("" + criarNumeroDaConta(TipoContas.CONTA_CORRENTE));
 
 			}
 		});
@@ -154,6 +159,18 @@ public class PainelNovoCliente extends JPanel {
 				textTaxaServico.setEnabled(false);
 				textLimiteSaque.setEnabled(false);
 				labelTaxa.setText("Taxa de Rendimento:");
+				
+				textNumeroConta.setText("" + criarNumeroDaConta(TipoContas.CONTA_POUPANCA));
+
+			}
+		});
+		
+		this.radioContaCartaoCredito.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				textNumeroConta.setText("" + criarNumeroDaConta(TipoContas.CONTA_CARTAO));
 
 			}
 		});
@@ -292,13 +309,13 @@ public class PainelNovoCliente extends JPanel {
 			maskData2.install(textDataAbertura);
 			maskData.install(textAniversario);
 
-//			maskConta.setMask("##.#####.#");
-//			maskConta.install(textNumeroConta);
+			// maskConta.setMask("##.#####.#");
+			// maskConta.install(textNumeroConta);
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		this.textNumeroConta.setText("01000011");
+		this.textNumeroConta.setText("" + criarNumeroDaConta(TipoContas.CONTA_CORRENTE));
 
 	}
 
@@ -329,8 +346,53 @@ public class PainelNovoCliente extends JPanel {
 
 		if ((verificacoesConta() == true)) {
 			// Tudo certo
-
 			labelAviso.setVisible(false);
+
+			Cliente cliente = null;
+
+			if (radioPessoaFisica.isSelected()) {
+				PessoaFisica cliente1 = new PessoaFisica(
+						textIdentificacao.getText());
+
+				cliente1.setCpf(textDocumento.getText());
+				cliente1.addEndereco(new Endereco(textCep.getText(),
+						new Integer(textNumeroCasa.getText()), textRua
+								.getText()));
+
+				cliente = cliente1;
+
+			} else {
+				PessoaJuridica cliente1 = new PessoaJuridica(
+						textIdentificacao.getText());
+
+				cliente1.setCnpj(textDocumento.getText());
+				cliente1.addEndereco(new Endereco(textCep.getText(),
+						new Integer(textNumeroCasa.getText()), textRua
+								.getText()));
+
+				cliente = cliente1;
+
+			}
+
+			ContaCartaoCredito contaCartao = new ContaCartaoCredito(cliente);
+
+			try {
+				passaDadosContaCartao(contaCartao);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BadLocationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			int key = Teste.getBancoGNB().getAgencias()
+					.get(Teste.getAgenciaIntMap()).getContas().size() + 1;
+
+			Teste.getBancoGNB().getAgencias().get(Teste.getAgenciaIntMap())
+					.getContas().put(key, contaCartao);
+
+			chamarPainelDeContas();
 
 		} else {
 			labelAviso.setVisible(true);
@@ -345,8 +407,53 @@ public class PainelNovoCliente extends JPanel {
 				&& (!textAniversario.getText().isEmpty())) {
 
 			// Tudo certo
-						labelAviso.setVisible(false);
-						
+			labelAviso.setVisible(false);
+
+			Cliente cliente = null;
+
+			if (radioPessoaFisica.isSelected()) {
+				PessoaFisica cliente1 = new PessoaFisica(
+						textIdentificacao.getText());
+
+				cliente1.setCpf(textDocumento.getText());
+				cliente1.addEndereco(new Endereco(textCep.getText(),
+						new Integer(textNumeroCasa.getText()), textRua
+								.getText()));
+
+				cliente = cliente1;
+
+			} else {
+				PessoaJuridica cliente1 = new PessoaJuridica(
+						textIdentificacao.getText());
+
+				cliente1.setCnpj(textDocumento.getText());
+				cliente1.addEndereco(new Endereco(textCep.getText(),
+						new Integer(textNumeroCasa.getText()), textRua
+								.getText()));
+
+				cliente = cliente1;
+
+			}
+
+			ContaPoupanca contaPoupanca = new ContaPoupanca(cliente);
+
+			try {
+				passaDadosContaPoupanca(contaPoupanca);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BadLocationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			int key = Teste.getBancoGNB().getAgencias()
+					.get(Teste.getAgenciaIntMap()).getContas().size() + 1;
+
+			Teste.getBancoGNB().getAgencias().get(Teste.getAgenciaIntMap())
+					.getContas().put(key, contaPoupanca);
+
+			chamarPainelDeContas();
 
 		} else {
 			labelAviso.setVisible(true);
@@ -363,32 +470,35 @@ public class PainelNovoCliente extends JPanel {
 
 			// Tudo certo
 			labelAviso.setVisible(false);
-			
+
 			Cliente cliente = null;
 
-			
 			if (radioPessoaFisica.isSelected()) {
-				PessoaFisica cliente1 = new PessoaFisica(textIdentificacao.getText());
-				
+				PessoaFisica cliente1 = new PessoaFisica(
+						textIdentificacao.getText());
+
 				cliente1.setCpf(textDocumento.getText());
-				cliente1.addEndereco(new Endereco(textCep.getText(), new Integer(textNumeroCasa.getText()), textRua.getText()));
-				
+				cliente1.addEndereco(new Endereco(textCep.getText(),
+						new Integer(textNumeroCasa.getText()), textRua
+								.getText()));
+
 				cliente = cliente1;
-				
-			}else{
-				PessoaJuridica cliente1 = new PessoaJuridica(textIdentificacao.getText());
-				
+
+			} else {
+				PessoaJuridica cliente1 = new PessoaJuridica(
+						textIdentificacao.getText());
+
 				cliente1.setCnpj(textDocumento.getText());
-				cliente1.addEndereco(new Endereco(textCep.getText(), new Integer(textNumeroCasa.getText()), textRua.getText()));
-				
+				cliente1.addEndereco(new Endereco(textCep.getText(),
+						new Integer(textNumeroCasa.getText()), textRua
+								.getText()));
+
 				cliente = cliente1;
-				
+
 			}
-			
-			
-			
+
 			ContaCorrente contaCorrente = new ContaCorrente(cliente);
-			
+
 			try {
 				passaDadosContaCorrente(contaCorrente);
 			} catch (NumberFormatException e) {
@@ -398,14 +508,14 @@ public class PainelNovoCliente extends JPanel {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			int key = Teste.getBancoGNB().getAgencias().get(Teste.getAgenciaIntMap()).getContas().size() + 1;
-			
-			Teste.getBancoGNB().getAgencias().get(Teste.getAgenciaIntMap()).getContas().put(key, contaCorrente);
-			
-			
+
+			int key = Teste.getBancoGNB().getAgencias()
+					.get(Teste.getAgenciaIntMap()).getContas().size() + 1;
+
+			Teste.getBancoGNB().getAgencias().get(Teste.getAgenciaIntMap())
+					.getContas().put(key, contaCorrente);
+
 			chamarPainelDeContas();
-			
 
 		} else {
 			labelAviso.setVisible(true);
@@ -413,8 +523,6 @@ public class PainelNovoCliente extends JPanel {
 		}
 
 	}
-
-	
 
 	private boolean verificacoesConta() {
 
@@ -451,88 +559,189 @@ public class PainelNovoCliente extends JPanel {
 
 		return true;
 	}
-	
-	
-//	Criando os dados das contas------------------------
-	
-	private void passaDadosContaCorrente(ContaCorrente cc) throws NumberFormatException, BadLocationException {
-		
-		//Data abertura -----------------------------------
-		Integer dia,mes = null,ano = null;
-		
-		
-		dia = new Integer(textDataAbertura.getText(0, 2)) ;
-		mes = new Integer(textDataAbertura.getText(3, 2)) ;
-		ano = new Integer(textDataAbertura.getText(6, 4)) ;
-		
-//		System.out.println(dia + "/" + mes + "/" + ano);
-//		System.out.println(textDataAbertura.getText(0, 7));
-		
-		
+
+	// Criando os dados das contas------------------------
+
+	private void passaDadosContaCorrente(ContaCorrente cc)
+			throws NumberFormatException, BadLocationException {
+
+		// Data abertura -----------------------------------
+		Integer dia, mes = null, ano = null;
+
+		dia = new Integer(textDataAbertura.getText(0, 2));
+		mes = new Integer(textDataAbertura.getText(3, 2));
+		ano = new Integer(textDataAbertura.getText(6, 4));
+
+		// System.out.println(dia + "/" + mes + "/" + ano);
+		// System.out.println(textDataAbertura.getText(0, 7));
+
 		try {
 			cc.setDataAbertura(new Data(dia, mes, ano));
 		} catch (DataInvalida e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		//Limite Saque---------------------------------------------------------
+
+		// Limite Saque---------------------------------------------------------
 		double limS;
 		Integer lims = new Integer(textLimiteSaque.getText());
 		limS = (double) lims;
 		cc.setLimiteSaque(limS);
-		
-		
-		//Numero conta------------------------------------------------
+
+		// Numero conta------------------------------------------------
 		cc.setNumero(new Integer(textNumeroConta.getText()));
-		
-		
-//		Saldo--------------------------------------
+
+		// Saldo--------------------------------------
 		double saldo;
 		Integer sald = new Integer(textSaldo.getText());
 		saldo = (double) sald;
 		cc.setSaldo(saldo);
-		
-		
-		
-//		Taxa de Juros----------------------
+
+		// Taxa de Juros----------------------
 		double taxaJuros;
 		Integer taxaJ = new Integer(textTaxa.getText());
 		taxaJuros = (double) taxaJ;
 		cc.setTaxaJuros(taxaJuros);
-		
-		
-//		Taxa de Serviço-----------------------
+
+		// Taxa de Serviço-----------------------
 		double taxaServico;
 		Integer taxaS = new Integer(textTaxaServico.getText());
 		taxaServico = (double) taxaS;
 		cc.setTaxaServico(taxaServico);
-		
-		
+
 		cc.setTipo(TipoContas.CONTA_CORRENTE);
-		
-		
-		
+
 	}
-	
-	
-	
-	
-//	Chama novamente o painel da Agencia com as Contas-----------------------------------
-	
+
+	private void passaDadosContaPoupanca(ContaPoupanca cc)
+			throws NumberFormatException, BadLocationException {
+
+		// Data abertura -----------------------------------
+		Integer dia, mes = null, ano = null;
+
+		dia = new Integer(textDataAbertura.getText(0, 2));
+		mes = new Integer(textDataAbertura.getText(3, 2));
+		ano = new Integer(textDataAbertura.getText(6, 4));
+
+		// System.out.println(dia + "/" + mes + "/" + ano);
+		// System.out.println(textDataAbertura.getText(0, 7));
+
+		try {
+			cc.setDataAbertura(new Data(dia, mes, ano));
+		} catch (DataInvalida e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// Data Aniversario -----------------------------------
+
+		dia = new Integer(textAniversario.getText(0, 2));
+		mes = new Integer(textAniversario.getText(3, 2));
+		ano = new Integer(textAniversario.getText(6, 4));
+
+		// System.out.println(dia + "/" + mes + "/" + ano);
+		// System.out.println(textDataAbertura.getText(0, 7));
+
+		try {
+			cc.setDataAniversario(new Data(dia, mes, ano));
+		} catch (DataInvalida e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// Numero conta------------------------------------------------
+		cc.setNumero(new Integer(textNumeroConta.getText()));
+
+		// Saldo--------------------------------------
+		double saldo;
+		Integer sald = new Integer(textSaldo.getText());
+		saldo = (double) sald;
+		cc.setSaldo(saldo);
+
+		cc.setTipo(TipoContas.CONTA_POUPANCA);
+
+	}
+
+	private void passaDadosContaCartao(ContaCartaoCredito cc)
+			throws NumberFormatException, BadLocationException {
+
+		// Data abertura -----------------------------------
+		Integer dia, mes = null, ano = null;
+
+		dia = new Integer(textDataAbertura.getText(0, 2));
+		mes = new Integer(textDataAbertura.getText(3, 2));
+		ano = new Integer(textDataAbertura.getText(6, 4));
+
+		// System.out.println(dia + "/" + mes + "/" + ano);
+		// System.out.println(textDataAbertura.getText(0, 7));
+
+		try {
+			cc.setDataAbertura(new Data(dia, mes, ano));
+		} catch (DataInvalida e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// Numero conta------------------------------------------------
+		cc.setNumero(new Integer(textNumeroConta.getText()));
+
+		// Saldo--------------------------------------
+		double saldo;
+		Integer sald = new Integer(textSaldo.getText());
+		saldo = (double) sald;
+		cc.setSaldo(saldo);
+
+		cc.setTipo(TipoContas.CONTA_CARTAO);
+
+	}
+
+	// Criar Numero da conta----------------
+
+	private int criarNumeroDaConta(TipoContas c) {
+
+		int num = 0;
+		int nAgencia, nConta, nTipo = 1;
+
+		nAgencia = Teste.getAgenciaIntMap() * 100000;
+		nConta = Teste.getBancoGNB().getAgencias()
+				.get(Teste.getAgenciaIntMap()).getContas().size() * 10;
+
+		switch (c) {
+		case CONTA_CORRENTE:
+			nTipo = 1;
+			break;
+
+		case CONTA_POUPANCA:
+			nTipo = 2;
+			break;
+
+		case CONTA_CARTAO:
+			nTipo = 3;
+			break;
+
+		}
+
+		num = nAgencia + nConta + nTipo;
+
+		// System.out.println(num);
+
+		return num;
+	}
+
+	// Chama novamente o painel da Agencia com as
+	// Contas-----------------------------------
+
 	private void chamarPainelDeContas() {
 		// TODO Auto-generated method stub
-		
+
 		Teste.getBancoGNB().getAgencias().get(Teste.getAgenciaIntMap())
-		.instaciarPaineis();
+				.instaciarPaineis();
 		// // Limpa janela e adiciona outra tela
 		Teste.janela.getContentPane().removeAll();
 		Teste.janela.getContentPane().add(
-				Teste.getBancoGNB().getAgencias()
-						.get(Teste.getAgenciaIntMap()).getPainelTabbed()
-						.getPainelCompleto());
+				Teste.getBancoGNB().getAgencias().get(Teste.getAgenciaIntMap())
+						.getPainelTabbed().getPainelCompleto());
 		Teste.janela.getContentPane().revalidate();
-		
+
 	}
 }

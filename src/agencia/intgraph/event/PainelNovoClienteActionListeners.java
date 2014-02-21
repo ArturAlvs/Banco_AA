@@ -6,9 +6,12 @@ import java.awt.event.ActionListener;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.text.JTextComponent;
 
+import enums.TipoContas;
 import Inicio.Teste;
 import agencia.intgraph.AgenciaTabbedPanel;
+import agencia.intgraph.PainelNovoCliente;
 import banco.intgraph.BancoTabbedPanel;
 
 public abstract class PainelNovoClienteActionListeners {
@@ -49,6 +52,7 @@ public abstract class PainelNovoClienteActionListeners {
 				taxaServico.setEnabled(true);
 				limiteSaque.setEnabled(true);
 				taxaJuros.setText("Taxa de Juros:");
+				
 			}
 		});
 	}

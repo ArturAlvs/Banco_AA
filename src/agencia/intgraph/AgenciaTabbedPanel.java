@@ -12,8 +12,6 @@ public class AgenciaTabbedPanel {
 
 	private final JTabbedPane tPanel = new JTabbedPane();
 
-	private final ShowContaTable contaTable = new ShowContaTable();
-
 
 	private final JPanel painelCompleto = new JPanel();
 
@@ -23,7 +21,7 @@ public class AgenciaTabbedPanel {
 		tPanel.setPreferredSize(new Dimension(Teste.getJanelaWidth(), Teste
 				.getJanelaHeight() - (Teste.getDiferencaTamanho() / 6 )));
 
-		tPanel.addTab("Contas", null, contaTable.getPainelCompleto(),
+		tPanel.addTab("Contas", null, new ShowContaTable(),
 				"Lista de AGENCIAS");
 		tPanel.setMnemonicAt(0, KeyEvent.VK_1);
 	

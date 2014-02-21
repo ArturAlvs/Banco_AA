@@ -14,15 +14,27 @@ public class ContaCartaoCredito extends Conta{
 	}
 	
 	
-//	Gets 'n' Sets
-	public void cobrarJuros(){
-		super.setSaldo(super.getSaldo() * 1.05);
-	}
+//	Gets 'n' Sets	
 	
-	
-//	Metodos
 	public void pagar(){
 		super.setSaldo(0);
+		
+		HistoricoConta h = new HistoricoConta();
+		h.setTransacao(Transacao.PAGAR);
+		//h.setData(data);
+		
+		super.getHistorico().add(h);
+	}
+	
+	public void cobrarJuros(){
+		super.setSaldo(super.getSaldo() * 1.05);
+		
+
+		HistoricoConta h = new HistoricoConta();
+		h.setTransacao(Transacao.COBRAR_JUROS);
+		//h.setData(data);
+		
+		super.getHistorico().add(h);
 	}
 
 

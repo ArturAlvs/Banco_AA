@@ -75,6 +75,10 @@ public class ContaCorrente extends ContaBancaria {
 	}
 
 	
+	public String toString(){
+		return super.toString()+","+this.getLimiteSaque()+","+this.getTaxaJuros()+","+this.getTaxaServico();
+	}
+	
 	
 
 }

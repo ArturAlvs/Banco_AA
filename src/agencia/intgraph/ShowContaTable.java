@@ -1,274 +1,206 @@
 package agencia.intgraph;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JButton;
 
-import conta.Conta;
-import agencia.Agencia;
 import Inicio.Teste;
+import conta.*;
 
-public class ShowContaTable {
-
-	// Dados (esquerda)
-	final JLabel labelCodigo = new JLabel("Numero: ");
-	final JFormattedTextField labelCodigoValue = new JFormattedTextField("_"); 
-	final JLabel labelTipo = new JLabel("Tipo:");
-	final JLabel labelTipoValue = new JLabel("_");
-	final JLabel labelNomeCliente = new JLabel("Cliente: ");
-	final JLabel labelNomeClienteValue = new JLabel("_");
-	private JPanel painelCodigoDados = new JPanel();
-	private JPanel painelTipoDados = new JPanel();
-	private JPanel painelNomeDados = new JPanel();
-	private final JPanel painelDadosConta = new JPanel();
-
-	// Tabela (direito)
-	private JScrollPane scrollPane;
+public class ShowContaTable extends JPanel {
 	private JTable tabelaContas;
-	private final JPanel painelTabelaContas = new JPanel();
 
-	// Formulario (inferior)
-	final JTextField textFieldConta = new JTextField(20);
-	final JButton botaoEscolherConta = new JButton("Escolher Conta");
-	private final JPanel painelFormularioEscolherConta = new JPanel();
+	/**
+	 * Create the panel.
+	 */
 
-	private final JPanel painelCompleto = new JPanel();
-
-	// Construtor -------------------------------
 	public ShowContaTable() {
+		setLayout(null);
 
-		// Tamanho dos paineis
-		painelDadosConta.setPreferredSize(new Dimension(Teste
-				.getJanelaWidth() / 2, Teste.getJanelaHeight()
-				- Teste.getDiferencaTamanho()));
-		painelTabelaContas.setPreferredSize(new Dimension(Teste
-				.getJanelaWidth() / 2, Teste.getJanelaHeight()
-				- Teste.getDiferencaTamanho()));
+		JLabel lblContas = new JLabel("Contas");
+		lblContas.setBounds(371, 12, 70, 15);
+		add(lblContas);
 
-		// Adiciona componentes no painel de DADOS
-		painelDadosConta.setLayout(new GridLayout(25,1));
-		
-		
-		painelCodigoDados.add(labelCodigo);
-		painelCodigoDados.add(labelCodigoValue);
-		
-		painelTipoDados.add(labelTipo);
-		painelTipoDados.add(labelTipoValue);
-		
-		painelNomeDados.add(labelNomeCliente);
-		painelNomeDados.add(labelNomeClienteValue);
-		
-		painelDadosConta.add(painelCodigoDados);
-		painelDadosConta.add(painelTipoDados);
-		painelDadosConta.add(painelNomeDados);
+		JLabel lblNumero = new JLabel("Numero:");
+		lblNumero.setBounds(12, 52, 70, 15);
+		add(lblNumero);
 
-		// Adicionando elementos no painel da Tabela
+		JLabel lblTipo = new JLabel("Tipo:");
+		lblTipo.setBounds(12, 92, 70, 15);
+		add(lblTipo);
 
-		criarTabela();
+		JLabel lblCliente = new JLabel("Cliente:");
+		lblCliente.setBounds(12, 138, 70, 15);
+		add(lblCliente);
 
-		criaEventoTextField();
-		criaEventoBotao();
+		final JLabel lblNumeroConta = new JLabel("");
+		lblNumeroConta.setBounds(94, 52, 70, 15);
+		add(lblNumeroConta);
 
-		// painelTabelaContas.add(tabelaContas);
-		painelTabelaContas.add(scrollPane);
+		final JLabel lblTipoConta = new JLabel("");
+		lblTipoConta.setBounds(94, 92, 70, 15);
+		add(lblTipoConta);
 
-		// Adicionando elementos no Formulario de escolha da Agencia
-		painelFormularioEscolherConta.add(textFieldConta);
-		painelFormularioEscolherConta.add(botaoEscolherConta);
+		final JLabel lblNomeCliente = new JLabel("");
+		lblNomeCliente.setBounds(94, 138, 70, 15);
+		add(lblNomeCliente);
 
-		// Layout do PAINEL
-		painelCompleto.setLayout(new BorderLayout());
-		painelCompleto.add(painelDadosConta, BorderLayout.WEST);
-		painelCompleto.add(painelTabelaContas, BorderLayout.EAST);
-		painelCompleto.add(painelFormularioEscolherConta, BorderLayout.SOUTH);
+		JButton btnEscolher = new JButton("Escolher");
+		btnEscolher.setBounds(12, 274, 117, 25);
+		add(btnEscolher);
 
-	}
-
-	// Gets 'n' Sets
-	public JPanel getPainelCompleto() {
-		return painelCompleto;
-	}
-
-	// Metodos-------------------------------------------------
-	// ----------------------------------
-	// Cria a table das contas
-	@SuppressWarnings("serial")
-	private void criarTabela() {
-		// System.out.println(Teste.getBancoGNB());
-
-		final int numDeDados = NUM_DE_DADOS;
-
-		
-		tabelaContas = new JTable(
-				Teste.getBancoGNB().getAgencias().get(AGENCIA_ATUAL).getContas().size() + 1, numDeDados) {
-			public boolean isCellEditable(int row, int column) { // Bloquear edição da ROW
-				return false;
-			}
-
-		};
-
-		tabelaContas.setRowHeight(30);
-
-		
-
-		scrollPane = new JScrollPane(tabelaContas);
-		tabelaContas.setPreferredScrollableViewportSize(new Dimension((Teste
-				.getJanelaWidth() / 2) - 30, Teste.getJanelaHeight()
-				- Teste.getDiferencaTamanho()));
-
-		// Selecionar ROW----------
-
-		tabelaContas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-		ListSelectionModel rowSM = tabelaContas.getSelectionModel();
-		rowSM.addListSelectionListener(new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				// Ignore extra messages.
-				if (e.getValueIsAdjusting())
-					return;
-
-				ListSelectionModel lsm = (ListSelectionModel) e.getSource();
-				if (lsm.isSelectionEmpty()) {
-					// no rows are selected
-				} else {
-					int rowSelecionada = lsm.getMinSelectionIndex(); // selectedRow
-																		// is
-																		// selected
-
-					if (tabelaContas.getValueAt(rowSelecionada, 0) != null) {
-						for (int i = 0; i < numDeDados; i++) {
-
-							switch (i) {
-							case 0:
-								labelCodigoValue.setText(tabelaContas
-										.getValueAt(rowSelecionada, i)
-										.toString());
-								break;
-							case 1:
-								labelTipoValue.setText(tabelaContas
-										.getValueAt(rowSelecionada, i)
-										.toString());
-								break;
-							case 2:
-								labelNomeClienteValue.setText(tabelaContas
-										.getValueAt(rowSelecionada, i)
-										.toString());
-								break;
-							}
-						}
-					}
-
-				}
-			}
-		});
-
-		// Faz coluna da descricao ficar maior
-		TableColumn coluna = null;
-		for (int i = 0; i < numDeDados; i++) {
-
-			coluna = tabelaContas.getColumnModel().getColumn(i);
-			if (i == 1) {
-				coluna.setPreferredWidth(300); // Descrição da Agencia
-
-			} else {
-				coluna.setPreferredWidth(30);
-			}
-		}
-
-		int i = 0;
-		for (Conta conta : Teste.getBancoGNB().getAgencias().get(AGENCIA_ATUAL).getContas().values()) {
-
-			for (int j = 0; j < numDeDados; j++) {
-
-				switch (j) {
-				case 0:
-					tabelaContas.setValueAt(conta.getNumero(), i, j);
-					break;
-				case 1:
-					tabelaContas.setValueAt(conta.getTipo() , i, j);
-					break;
-				case 2:
-					tabelaContas.setValueAt(conta.getCliente().getIdentificacao(), i, j);
-					break;
-
-				}
-
-			}
-
-			i++;
-		}
-	}
-
-	// Cria Evento do click na caixa de texto
-	private void criaEventoTextField() {
-
-		textFieldConta.addActionListener(new ActionListener() {
+		// Evento do botao
+		btnEscolher.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
 
-				if (textFieldConta.getText() != null) {
+				Integer numeroConta = new Integer(lblNumeroConta.getText());
+				Teste.setContaIntMap(numeroConta);
+				
+				Teste.getBancoGNB().getAgencias().get(Teste.getAgenciaIntMap()).getContas().get(numeroConta).instanciarPainel();
 
-					Integer agenciaSelecionada = new Integer(textFieldConta
-							.getText());
-					agenciaSelecionada--;
-
-					// Se o ususario digitar 0(zero)
-					if (agenciaSelecionada < 0) {
-						agenciaSelecionada = 0;
-					}
-
-					if (tabelaContas.getValueAt(agenciaSelecionada, 0) != null) {
-						for (int i = 0; i < NUM_DE_DADOS; i++) {
-
-							switch (i) {
-							case 0:
-								labelCodigoValue.setText(tabelaContas
-										.getValueAt(agenciaSelecionada, i)
-										.toString());
-								break;
-							case 1:
-								labelTipoValue.setText(tabelaContas
-										.getValueAt(agenciaSelecionada, i)
-										.toString());
-								break;
-							case 2:
-								labelNomeClienteValue.setText(tabelaContas
-										.getValueAt(agenciaSelecionada, i)
-										.toString());
-								break;
-							}
-						}
-					}
-
-				}
+				// // Limpa janela e adiciona outra tela
+				Teste.janela.getContentPane().removeAll();
+				
+				Teste.janela.getContentPane().add(
+						Teste.getBancoGNB().getAgencias().get(Teste.getAgenciaIntMap()).getContas().get(numeroConta).getPainelDaConta().getPainelCompleto() );
+				
+				Teste.janela.getContentPane().revalidate();
+				
 
 			}
 		});
+
+		// CRIAR SCROLLL
+		JScrollPane scroll = new JScrollPane();
+		scroll.setToolTipText("");
+
+		// CRIAR TABELA
+		tabelaContas = new JTable(100, 3);
+		scroll.setViewportView(tabelaContas);
+
+		// ADD EVENTO NA TABELA
+		tabelaContas.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				int linha = tabelaContas.getSelectedRow();
+				// se tem linha selecionada
+				if (linha > -1 && (tabelaContas.getValueAt(linha, 0) != null)) {
+					lblNumeroConta.setText(tabelaContas.getValueAt(linha, 0)
+							.toString());
+					lblTipoConta.setText(tabelaContas.getValueAt(linha, 1)
+							.toString());
+					lblNomeCliente.setText(tabelaContas.getValueAt(linha, 2)
+							.toString());
+				}
+			}
+		});
+
+		// SETAR TITULOS
+		tabelaContas.getColumnModel().getColumn(0).setHeaderValue("Numero");
+		tabelaContas.getColumnModel().getColumn(1).setHeaderValue("Tipo");
+		tabelaContas.getColumnModel().getColumn(2).setHeaderValue("Cliente");
+
+		tabelaContas.getColumnModel().getColumn(1).setMaxWidth(40);
+		tabelaContas.getColumnModel().getColumn(0).setMaxWidth(60);
+
+		// ADD TABELA AO SCROLL
+		scroll.setViewportView(tabelaContas);
+		scroll.setBounds(260, 39, 269, 260);
+		add(scroll);
+
+		preenche(Teste.getBancoGNB().getAgencias()
+				.get(Teste.getAgenciaIntMap()).getContas());
+
 	}
 
-	
-//	Cria Evento do botao Selecionar Conta
-	
-	private void criaEventoBotao(){
-		
+	public void preenche(HashMap<Integer, Conta> c) {
+
+		int i = 0;
+		for (Conta conta : c.values()) {
+
+			this.tabelaContas.setValueAt(conta.getNumero(), i, 0);
+
+			if (conta instanceof ContaCorrente) {
+				this.tabelaContas.setValueAt("Conta Corrente", i, 1);
+			} else if (conta instanceof ContaPoupanca) {
+				this.tabelaContas.setValueAt("Conta Poupanca", i, 1);
+			} else if (conta instanceof ContaCartaoCredito)
+				this.tabelaContas.setValueAt("Conta Cartão", i, 1);
+
+			this.tabelaContas.setValueAt(conta.getCliente().getIdentificacao(),
+					i, 2);
+
+			i++;
+
+		}
+
 	}
-	
-	
-	
-	
-	
-	
-//	Constantes------------
-	private final int NUM_DE_DADOS = 3;
-	private final int AGENCIA_ATUAL = Teste.getAgenciaIntMap();
+
+	// public void preenche(ArrayList<Conta> c){
+	// for (int i = 0; i < c.size(); i++) {
+	// this.tabelaContas.setValueAt(c.get(i), i, 0);
+	// this.tabelaContas.setValueAt(c.get(i).getCliente().getIdentificacao(), i,
+	// 2);
+	// if(c.get(i) instanceof ContaCorrente){
+	// this.tabelaContas.setValueAt("Conta Corrente", i, 1);
+	// }else if(c.get(i) instanceof ContaPoupanca){
+	// this.tabelaContas.setValueAt("Conta Poupanca", i, 1);
+	// }else if (c.get(i) instanceof ContaCartaoCredito)
+	// this.tabelaContas.setValueAt("Conta Cartão", i, 1);
+	// }
+	//
+	// }
+
+	// public static void main(String[] args) {
+	// JFrame janela = new JFrame();
+	//
+	// janela = new JFrame();
+	// janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	// janela.setSize(600, 400);
+	//
+	// ShowContaTable p = new ShowContaTable();
+	// janela.getContentPane().add(p);
+	//
+	// janela.setVisible(true);
+	//
+	// }
 }
