@@ -3,12 +3,14 @@ package cliente;
 public class Endereco {
 
 	private String cep;
+	private String rua;
 	private int numeroEnd;
 	
-	public Endereco(String cep, int numeroEnd){
+	public Endereco(String cep, int numeroEnd, String rua){
 		
 		this.cep = cep;
 		this.numeroEnd = numeroEnd;
+		this.setRua(rua);
 	}
 	
 	public int getNumeroEnd() {
@@ -26,6 +28,15 @@ public class Endereco {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
+
+	public String getRua() {
+		return rua;
+	}
+
+	public void setRua(String rua) {
+		this.rua = rua;
+	}
+	
 	
 	
 }
