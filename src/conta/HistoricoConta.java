@@ -1,8 +1,10 @@
 package conta;
 
+import java.io.Serializable;
+
 import data.Data;
 
-public class HistoricoConta {
+public class HistoricoConta implements Serializable{
 
 	private Data data;
 	private Transacao transacao;

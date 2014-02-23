@@ -15,7 +15,7 @@ import javax.swing.plaf.basic.BasicBorders.RadioButtonBorder;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.MaskFormatter;
 
-import menu.testaMenu;
+
 import cliente.Cliente;
 import cliente.Endereco;
 import cliente.PessoaFisica;
@@ -63,7 +63,7 @@ public class PainelNovoCliente extends JPanel {
 	// rendimento
 	private final JLabel labelTaxa = new JLabel("Taxa de Juros:");
 	private final JLabel labelLimiteSaque = new JLabel("Limite de Saque:");
-	private final JLabel labelTaxaServiço = new JLabel("Taxa de Serviço:");
+	private final JLabel labelTaxaServico = new JLabel("Taxa de Serviço:");
 	private final JLabel labelAniversario = new JLabel("Aniversário:");
 	private final JLabel labelNumeroCasa = new JLabel("Número:");
 	private final JLabel labelRua = new JLabel("Rua");
@@ -262,10 +262,10 @@ public class PainelNovoCliente extends JPanel {
 		this.add(labelAniversario);
 		this.add(textAniversario);
 
-		this.labelTaxaServiço.setBounds(350, 290, 120, 20);
+		this.labelTaxaServico.setBounds(350, 290, 120, 20);
 		this.textTaxaServico.setBounds(470 + 40, 290, 40, 20);
 
-		this.add(labelTaxaServiço);
+		this.add(labelTaxaServico);
 		this.add(textTaxaServico);
 
 		this.labelTaxa.setBounds(350, 320, 100, 20);

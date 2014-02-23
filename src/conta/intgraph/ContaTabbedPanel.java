@@ -37,9 +37,13 @@ public class ContaTabbedPanel {
 		tPanel.setMnemonicAt(2, KeyEvent.VK_3);
 		
 		
-		tPanel.addTab("Transferir", null, new PainelTransferencia(Teste.getBancoGNB().getAgencias().get(Teste.getAgenciaIntMap())),
+		tPanel.addTab("Transferir", null, new PainelTransferencia(Teste.getBancoGNB().getAgencias().get(Teste.getAgenciaIntMap()), Teste.getBancoGNB().getAgencias().get(Teste.getAgenciaIntMap()).getContas().get(Teste.getContaIntMap()) ),
 				"Criar Agencia");
 		tPanel.setMnemonicAt(3, KeyEvent.VK_4);
+		
+		tPanel.addTab("Historico", null, new PainelHistorico(),
+				"Criar Agencia");
+		tPanel.setMnemonicAt(4, KeyEvent.VK_5);
 		
 
 

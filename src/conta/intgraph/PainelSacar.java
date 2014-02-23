@@ -105,6 +105,8 @@ public class PainelSacar extends JPanel {
 					
 					txtQuantia.setText("");
 					
+					PainelDepositar.atualizarTela();
+					
 				}catch(Exception exc){
 					System.out.println("Valor informado Invalido");
 				}
@@ -115,25 +117,5 @@ public class PainelSacar extends JPanel {
 
 	}
 	
-	/*
-	public static void main(String[] args) {
-		
-		JFrame janela = new JFrame();
-		janela.setSize(800, 600);
-		janela.setLocationRelativeTo(null); 
-		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		PessoaFisica c1 = new PessoaFisica("Douglas");
-		c1.setCpf("14934393757");
-		
-		ContaCorrente c = new ContaCorrente(c1);
-		c.setSaldo(1000);
-		
-		PainelSacar painel = new PainelSacar(c);
-		janela.add(painel);
-		
-		janela.setVisible(true);
-	}
-	
-	*/
+
 }

@@ -19,6 +19,10 @@ public abstract class PainelInicialActList {
 //						Teste.getBancoGNB().aAA();
 //						Teste.getBancoGNB().getAgencias().get(1).aAA();
 						
+						Teste.pegaBanco();
+						
+						Teste.getBancoGNB().instaciarPaineis();
+						
 //						Limpa janela e adiciona outra tela 
 						Teste.janela.getContentPane().removeAll();
 						Teste.janela.getContentPane().add(Teste.getBancoGNB().getPainelTabbed().getPainelCompleto());

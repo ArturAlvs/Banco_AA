@@ -11,13 +11,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import agencia.Agencia;
 import Inicio.Teste;
 
 public class CriarAgencia {
 	
-	JLabel lblNumeroDaAgncia = new JLabel("Numero da Agência:");	
-	JLabel label = new JLabel("0" + (Teste.getBancoGNB().getAgencias().size() + 1 ));
-	JLabel lblDescrio = new JLabel("Descrição:");
+	JLabel lblNumeroDaAgncia = new JLabel("Numero da Agencia:");	
+	JLabel label ;
+	JLabel lblDescrio = new JLabel("Descricao:");
 	JTextArea textArea = new JTextArea();
 	JButton btnAdicionarAgncia = new JButton("Adicionar Agência");
 	
@@ -26,6 +27,9 @@ public class CriarAgencia {
 	
 //	Construtor --------------
 	public CriarAgencia() {
+		
+		label = new JLabel("0" + ( Teste.getBancoGNB().getAgencias().size() + 2));
+		
 		painelCompleto.setLayout(null);
 		
 		
@@ -69,8 +73,9 @@ public class CriarAgencia {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				Teste.getBancoGNB().addAgencia(textArea.getText());
 //				System.out.println(Teste.getBancoGNB().getAgencias().size());
-				Teste.getBancoGNB().criarAgencia(textArea.getText());
+//				Teste.getBancoGNB().criarAgencia(textArea.getText());
 //				System.out.println(Teste.getBancoGNB().getAgencias().size());
 				
 				

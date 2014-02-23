@@ -1,5 +1,6 @@
 package agencia;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import conta.Conta;
@@ -7,11 +8,14 @@ import conta.ContaCorrente;
 import conta.ContaPoupanca;
 import cliente.*;
 
-public class Agencia {
+public class Agencia implements Serializable{
 	
+
+
+
 	// Paineis--------------------------------------
 //	Painel de Agencias
-	private agencia.intgraph.AgenciaTabbedPanel painelTabbed;
+	private transient agencia.intgraph.AgenciaTabbedPanel painelTabbed;
 
 	
 	
@@ -42,7 +46,7 @@ public class Agencia {
 		
 		this.setDescricao(desc);
 		
-		this.contas.put(0, new ContaCorrente(new PessoaFisica("Artur")));
+//		this.contas.put(0, new ContaCorrente(new PessoaFisica("Artur")));
 		
 	}
 	

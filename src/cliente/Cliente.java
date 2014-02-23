@@ -1,9 +1,14 @@
 package cliente;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Cliente {
+public abstract class Cliente implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList <Endereco> endereco = new ArrayList <Endereco> ();
 	private String identificacao;
 	

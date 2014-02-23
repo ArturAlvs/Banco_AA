@@ -1,9 +1,12 @@
 package Inicio;
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.*;
 
+import serializa.Serializa;
 import menu.MenuPrincipal;
 import cliente.intgraph.ShowClienteTable;
 import banco.intgraph.PainelInicial;
@@ -15,10 +18,57 @@ public class Teste {
 	public static void main(String[] args) {
 
 		Teste gnb = new Teste();
+		
 
 		bancoGNB.instaciarPaineis();
 
 		janela = new JFrame(NOME_JANELA);
+		janela.addWindowListener(new WindowListener() {
+			
+			@Override
+			public void windowOpened(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowIconified(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeiconified(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeactivated(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+//				System.out.println("closing");
+				guardaBanco();
+				
+			}
+			
+			@Override
+			public void windowClosed(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void windowActivated(WindowEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		janela.setSize(JANELA_WIDTH, JANELA_HEIGHT);
 
@@ -27,9 +77,10 @@ public class Teste {
 
 		// System.out.println(getBancoGNB());
 
-		 janela.getContentPane().add(bancoGNB.getPainelInicial().getPainelCompleto());
-//		janela.getContentPane().add(
-//				bancoGNB.getPainelTabbed().getPainelCompleto());
+		janela.getContentPane().add(
+				bancoGNB.getPainelInicial().getPainelCompleto());
+		// janela.getContentPane().add(
+		// bancoGNB.getPainelTabbed().getPainelCompleto());
 
 		// System.out.println(janela.getContentPane().getComponentCount());
 
@@ -93,6 +144,15 @@ public class Teste {
 
 	public static void setContaIntMap(int contaIntMap) {
 		Teste.contaIntMap = contaIntMap;
+	}
+
+	// Serializa O Banco
+	public static void guardaBanco() {
+		Serializa.SerBanco(bancoGNB);
+	}
+
+	public static void pegaBanco() {
+		bancoGNB = Serializa.deSerealiza();
 	}
 
 }

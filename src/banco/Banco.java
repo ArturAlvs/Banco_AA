@@ -1,16 +1,22 @@
 package banco;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
+import Inicio.Teste;
 import agencia.Agencia;
 
-public class Banco {
+public class Banco implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// Paineis--------------------------------------
 //	Painel Inicial
-	private banco.intgraph.PainelInicial painelInicial ;
+	private transient banco.intgraph.PainelInicial painelInicial ;
 //	Painel de Agencias
-	private banco.intgraph.BancoTabbedPanel painelTabbed;
+	private transient banco.intgraph.BancoTabbedPanel painelTabbed;
 
 //	Atributos
 	private String nome;
@@ -20,9 +26,11 @@ public class Banco {
 			
 		setNome(nome);
 
-		Agencia agencia = new Agencia("Primeira Agencia");
-		getAgencias().put(agencia.getCodigo(), agencia);
-		agencia = null;
+		addAgencia("Primeira Agencia");
+		
+//		Agencia agencia = new Agencia("Primeira Agencia");
+//		getAgencias().put(agencia.getCodigo(), agencia);
+//		agencia = null;
 		
 
 	}
@@ -69,11 +77,11 @@ public class Banco {
 	
 //	Metodos-----------------------
 	
-	public void criarAgencia(String desc){
-		Agencia agencia = new Agencia(desc);
-		getAgencias().put(agencia.getCodigo(), agencia);
-		agencia = null;
-	}
+//	public void criarAgencia(String desc){
+//		Agencia agencia = new Agencia(desc);
+//		getAgencias().put(Teste.getBancoGNB().getAgencias().size() + 1, agencia);
+//		agencia = null;
+//	}
 	
 	public void instaciarPaineis(){
 //		Intanciando Paineis

@@ -68,17 +68,20 @@ public class ShowContaTable extends JPanel {
 
 				Integer numeroConta = new Integer(lblNumeroConta.getText());
 				Teste.setContaIntMap(numeroConta);
-				
-				Teste.getBancoGNB().getAgencias().get(Teste.getAgenciaIntMap()).getContas().get(numeroConta).instanciarPainel();
+
+				Teste.getBancoGNB().getAgencias().get(Teste.getAgenciaIntMap())
+						.getContas().get(numeroConta).instanciarPainel();
 
 				// // Limpa janela e adiciona outra tela
 				Teste.janela.getContentPane().removeAll();
-				
+
 				Teste.janela.getContentPane().add(
-						Teste.getBancoGNB().getAgencias().get(Teste.getAgenciaIntMap()).getContas().get(numeroConta).getPainelDaConta().getPainelCompleto() );
-				
+						Teste.getBancoGNB().getAgencias()
+								.get(Teste.getAgenciaIntMap()).getContas()
+								.get(numeroConta).getPainelDaConta()
+								.getPainelCompleto());
+
 				Teste.janela.getContentPane().revalidate();
-				
 
 			}
 		});
@@ -175,32 +178,4 @@ public class ShowContaTable extends JPanel {
 
 	}
 
-	// public void preenche(ArrayList<Conta> c){
-	// for (int i = 0; i < c.size(); i++) {
-	// this.tabelaContas.setValueAt(c.get(i), i, 0);
-	// this.tabelaContas.setValueAt(c.get(i).getCliente().getIdentificacao(), i,
-	// 2);
-	// if(c.get(i) instanceof ContaCorrente){
-	// this.tabelaContas.setValueAt("Conta Corrente", i, 1);
-	// }else if(c.get(i) instanceof ContaPoupanca){
-	// this.tabelaContas.setValueAt("Conta Poupanca", i, 1);
-	// }else if (c.get(i) instanceof ContaCartaoCredito)
-	// this.tabelaContas.setValueAt("Conta Cartão", i, 1);
-	// }
-	//
-	// }
-
-	// public static void main(String[] args) {
-	// JFrame janela = new JFrame();
-	//
-	// janela = new JFrame();
-	// janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	// janela.setSize(600, 400);
-	//
-	// ShowContaTable p = new ShowContaTable();
-	// janela.getContentPane().add(p);
-	//
-	// janela.setVisible(true);
-	//
-	// }
 }

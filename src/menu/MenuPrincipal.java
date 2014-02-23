@@ -47,7 +47,7 @@ public class MenuPrincipal extends JMenuBar implements KeyListener, ActionListen
 		//     menu         submenu     submenu      menu
 		JMenu menuArquivo,menuImportar,menuExportar,menuUtilitaros,menuRelatorios;
 		//Itens de menu
-		JMenuItem importarAgencia,importarConta,exportarAgencia,exportarConta,trocaAgencia,relatorioClientes,relatorioAgencias,exit;
+		JMenuItem importarAgencia,importarConta,exportarAgencia,exportarConta,trocaAgencia, trocarConta,relatorioClientes,relatorioAgencias,exit;
 		//criando o menu		
 		menuBar = new JMenuBar();
 		
@@ -74,9 +74,12 @@ public class MenuPrincipal extends JMenuBar implements KeyListener, ActionListen
 		
 		trocaAgencia = new JMenuItem("Trocar Agencia");
 		trocaAgencia.addActionListener(MenuActionListeners.trocaAgenciaGetAction());
+		trocarConta = new JMenuItem("Trocar Conta");
+		trocarConta.addActionListener(MenuActionListeners.trocarContaGetAction());
 		menuRelatorios =  new JMenu("Relatorios");
 		
 		menuUtilitaros.add(trocaAgencia);
+		menuUtilitaros.add(trocarConta);
 		menuUtilitaros.add(menuRelatorios);
 		
 		

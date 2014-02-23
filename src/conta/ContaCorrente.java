@@ -42,7 +42,7 @@ public class ContaCorrente extends ContaBancaria {
 			return false;
 		}
 		else {
-			super.setSaldo(super.getSaldo() - valorSaque);
+			super.sacar(valorSaque);
 		}
 		
 		return true;

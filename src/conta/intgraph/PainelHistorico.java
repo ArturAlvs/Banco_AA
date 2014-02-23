@@ -16,7 +16,7 @@ import conta.HistoricoConta;
 
 public class PainelHistorico extends JPanel {
 	private final JScrollPane scroll = new JScrollPane();
-	private final JTable table = new JTable(1, 3);
+	private final JTable table;
 	
 	
 	public PainelHistorico() {
@@ -27,6 +27,7 @@ public class PainelHistorico extends JPanel {
 		lblhistorico.setBounds(165, 12, 114, 39);
 		add(lblhistorico);
 		
+		table = new JTable(Teste.getBancoGNB().getAgencias().get(Teste.getAgenciaIntMap()).getContas().get(Teste.getContaIntMap()).getHistorico().size() + 3, 3);
 		
 		scroll.setBounds(83, 63, 311, 254);
 		table.getColumnModel().getColumn(0).setHeaderValue("Tipo");
@@ -36,6 +37,8 @@ public class PainelHistorico extends JPanel {
 		scroll.setViewportView(table);
 		
 		add(scroll);
+		
+		
 		
 		
 //		Preenche com essa conta (Conta atual)

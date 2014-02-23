@@ -1,5 +1,6 @@
-package conta;
+ package conta;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import conta.intgraph.ContaTabbedPanel;
@@ -7,10 +8,15 @@ import cliente.Cliente;
 import data.Data;
 import enums.TipoContas;
 
-public abstract class Conta {
+public abstract class Conta implements Serializable {
 	
-//	Painel
-	private ContaTabbedPanel painelDaConta; 
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	//	Painel
+	private transient ContaTabbedPanel painelDaConta; 
 
 	// Atributos
 
@@ -59,6 +65,21 @@ public abstract class Conta {
 		HistoricoConta h = new HistoricoConta();
 		h.setTransacao(Transacao.SACAR);
 		h.setValor(valorSaque);
+		// h.setData(data);
+
+		this.historico.add(h);
+
+		return true;
+	}
+	
+	public boolean depositar(double valorDeposito) {
+
+
+		this.setSaldo(this.obterSaldo() + valorDeposito);
+
+		HistoricoConta h = new HistoricoConta();
+		h.setTransacao(Transacao.CREDITAR);
+		h.setValor(valorDeposito);
 		// h.setData(data);
 
 		this.historico.add(h);
